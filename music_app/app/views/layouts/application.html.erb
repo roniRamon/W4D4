@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MusicApp</title>
+
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
+    <style>
+      body {
+          font-family: "Lucida Console", Monaco, monospace;
+        }
+
+      h1 {
+        color: red;
+        font-weight: bold;
+      }
+
+    small {
+        display: inline-block;
+      }
+
+
+
+
+    </style>
+  </head>
+
+  <body>
+    <section>
+        <h1>Music App</h1>
+
+        <p class="user-info">
+          <% if current_user %>
+            <small>
+              Logged in as: <%= current_user.email %>
+              <%= button_to 'Logout', session_url, method: :delete, class: 'logout' %>
+            </small>
+          <!-- <%# else %>
+              <%#= link_to "Sign in", new_session_url %>
+              <%#= link_to "Sign in", new_user_url %> -->
+          <% end  %>
+        </p>
+        <%= yield %>
+
+    </section>
+  </body>
+</html>

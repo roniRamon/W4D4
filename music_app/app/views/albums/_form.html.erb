@@ -1,0 +1,57 @@
+
+<% if type == :new %>
+  <% action_url = albums_url %>
+  <% submit_val = "Add a new Album" %>
+<% elsif type == :edit %>
+  <% action_url = album_url(album) %>
+  <% submit_val = "Update Album" %>
+<% end %>
+
+
+<form action="<%= action_url %>" method="post">
+  <% if type == :edit %>
+    <input type="hidden" name="_method" value="patch">
+  <% end %>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="title">Album Title</label>
+  <input type="text" name="album[title]"
+    value="<%= album.present? ? album.title : ""  %>"
+    />
+  <br><br>
+
+  <label for="band_name">Band Name</label>
+  <select id="band_name" name="album[band_id]">
+    <% Band.all.each do |band| %>
+      <option value="<%= band.id %>"
+          <%= album.band_id ==  band.id ? "selected" : "" %> />
+        <%= band.name %>
+      </option>
+    <% end %>
+  </select>
+  <br><br>
+
+  <label>Studio
+    <input type="radio" name="album[studio]" value="true"
+      <%= album.studio ? "checked" : ""%> />
+  </label>
+  <label>Live
+    <input type="radio" name="album[studio]" value="false"
+      <%= album.studio ? "" : "checked" %> />
+  </label>
+
+  <br><br>
+  <label for="year">Year</label>
+  <input id="year" type="number" name="album[year]" value="<%= album.year  %>" />
+  <br><br>
+  <input type="submit" value="<%= submit_val %>"/>
+
+</form>
+
+  <% if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+      <small style="color: red">
+        <%= error %>
+      </small>
+    <% end %>
+  <% end %>

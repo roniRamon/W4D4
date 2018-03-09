@@ -1,0 +1,19 @@
+<h3>Band Name: <%=@band.name%></h3>
+
+<small><% flash.now[:success] %></small>
+
+<% if @band.albums.empty?  %>
+  <small>Band dont have albums yet...</small>
+<% else %>
+  <ul>
+    <% @band.albums.each do |album| %>
+      <li><a href="<%= album_url(album) %>"> <%= album.title %> </a></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<br>
+<button> <a href="<%= edit_band_url %>" >Edit Band</a></button>
+<%= button_to 'Delete Band', band_url(@band), method: :delete %>
+
+<button> <a href="<%= new_album_url %>" >Add Album</a></button>
